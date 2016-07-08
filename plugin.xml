@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+plugin videoproc.
+-->
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:rim="http://www.blackberry.com/ns/widgets"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="cordova-plugin-videoproc"
+    version="1.0.0">
+    <name>videoproc</name>
+    <description>Video Proc Plugin</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,videoproc</keywords>
+    <repo>https://github.com/skyshore2001/cordova-plugin-videoproc</repo>
+    <issue>https://github.com/skyshore2001/cordova-plugin-videoproc/issues</issue>
+
+    <js-module src="www/videoproc.js" name="videoproc">
+        <clobbers target="videoproc" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="VideoProc" >
+                <param name="android-package" value="com.oliveche.videoproc.VideoProc"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/VideoProc.java" target-dir="src/com/oliveche/videoproc" />
+    </platform>
+
+    <!-- ios -->
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="VideoProc">
+                <param name="ios-package" value="CDVVideoProc"/>
+            </feature>
+        </config-file>
+
+        <header-file src="src/ios/CDVVideoProc.h" />
+        <source-file src="src/ios/CDVVideoProc.m" />
+    </platform>
+
+    <!-- browser -->
+    <!--platform name="browser">
+        <config-file target="config.xml" parent="/*">
+            <feature name="VideoProc">
+                <param name="browser-package" value="VideoProcProxy" />
+            </feature>
+        </config-file>
+
+        <js-module src="src/browser/VideoProcProxy.js" name="VideoProcProxy">
+            <runs />
+        </js-module>
+    </platform-->
+</plugin>
