@@ -32,16 +32,34 @@ public class VideoProc extends CordovaPlugin {
      */
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if ("compose".equals(action)) {
-			String file = "newFile";
-			/*
-            JSONObject r = new JSONObject();
-            r.put("uuid", Device.uuid);
-			*/
-            callbackContext.success(file);
+            final String videoFile = args.getString(0);
+            final JSONObject opt = args.getJSONObject(1);
+            final CallbackContext cb = callbackContext;
+
+            cordova.getThreadPool().execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        String file = compose(videoFile, opt);
+                        cb.success(file);
+                    } catch (Exception e) {
+                        cb.error(e.getMessage());
+                    }
+                }
+            });
         }
         else {
             return false;
         }
         return true;
+    }
+
+    protected String compose(String videoFile, JSONObject opt) throws Exception {
+        // TODO: compose video, audio, image, text
+        if (videoFile.isEmpty()) {
+            throw new Exception("fail to find videoFile: " + videoFile);
+        }
+        Thread.sleep(2000);
+        return videoFile;
     }
 }

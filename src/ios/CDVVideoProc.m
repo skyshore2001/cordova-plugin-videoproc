@@ -7,14 +7,25 @@
 
 - (void)compose:(CDVInvokedUrlCommand*)command
 {
-    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"newFile"];
+	NSString *videoFile = [command.arguments objectAtIndex:0];
+    NSDictionary *opt = [command.arguments objectAtIndex:1];
+	
+	if (videoFile != nil && [videoFile length] == 0) {
+		NSString *errstr = @"找不到文件";
+		CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errstr];
+		[self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+		return;
+	}
 
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-}
+    
+    [self.commandDelegate runInBackground:^{
+	
+        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:videoFile];
 
-+ (NSString*)cordovaVersion
-{
-    return CDV_VERSION;
+        sleep(2);
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    }];
+
 }
 
 @end

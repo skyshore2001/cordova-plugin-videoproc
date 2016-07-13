@@ -43,15 +43,15 @@ plugin videoproc.
     </platform>
 
     <!-- browser -->
-    <!--platform name="browser">
+    <platform name="browser">
         <config-file target="config.xml" parent="/*">
             <feature name="VideoProc">
-                <param name="browser-package" value="VideoProcProxy" />
+                <param name="browser-package" value="VideoProc" />
             </feature>
         </config-file>
 
         <js-module src="src/browser/VideoProcProxy.js" name="VideoProcProxy">
             <runs />
         </js-module>
-    </platform-->
+    </platform>
 </plugin>
