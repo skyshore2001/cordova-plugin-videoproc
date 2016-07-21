@@ -1,0 +1,26 @@
+{
+    "items": [
+              {
+              "type": "audio",
+              "value": "audioFile"
+              },
+              {
+              "type": "image",
+              "value": "好好吃饭奥!",
+              "from": 0.0,
+              "to": 30.0,
+              "x": 0,
+              "y": 0,
+              "width":480,
+              "height":360
+              },
+              {
+              "type": "text",
+              "value": "好好吃饭奥!",
+              "from": 0.0,
+              "to": 20.0,
+              "x": 120,
+              "y": 150
+              }
+            ]
+}

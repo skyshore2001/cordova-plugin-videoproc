@@ -40,6 +40,45 @@ plugin videoproc.
 
         <header-file src="src/ios/CDVVideoProc.h" />
         <source-file src="src/ios/CDVVideoProc.m" />
+
+<header-file src="src/ios/videoAESDK/ALAssetsLibrary+CustomPhotoAlbum.h" target-dir="videoAESDK" />
+<source-file src="src/ios/videoAESDK/ALAssetsLibrary+CustomPhotoAlbum.m" target-dir="videoAESDK" />
+<header-file src="src/ios/videoAESDK/AVAssetTrack+Transform.h" target-dir="videoAESDK" />
+<source-file src="src/ios/videoAESDK/AVAssetTrack+Transform.m" target-dir="videoAESDK" />
+<header-file src="src/ios/videoAESDK/ConfigItem.h" target-dir="videoAESDK" />
+<source-file src="src/ios/videoAESDK/ConfigItem.m" target-dir="videoAESDK" />
+<source-file src="src/ios/videoAESDK/GLESMath.c" target-dir="videoAESDK" />
+<header-file src="src/ios/videoAESDK/GLESMath.h" target-dir="videoAESDK" />
+<header-file src="src/ios/videoAESDK/GLModel.h" target-dir="videoAESDK" />
+<source-file src="src/ios/videoAESDK/GLModel.m" target-dir="videoAESDK" />
+<header-file src="src/ios/videoAESDK/RenderFilter.h" target-dir="videoAESDK" />
+<source-file src="src/ios/videoAESDK/RenderFilter.m" target-dir="videoAESDK" />
+<header-file src="src/ios/videoAESDK/RSAudioChannel.h" target-dir="videoAESDK" />
+<source-file src="src/ios/videoAESDK/RSAudioChannel.mm" target-dir="videoAESDK" />
+<header-file src="src/ios/videoAESDK/RSBaseMedia.h" target-dir="videoAESDK" />
+<source-file src="src/ios/videoAESDK/RSBaseMedia.m" target-dir="videoAESDK" />
+<header-file src="src/ios/videoAESDK/RSChunk.h" target-dir="videoAESDK" />
+<source-file src="src/ios/videoAESDK/RSChunk.m" target-dir="videoAESDK" />
+<header-file src="src/ios/videoAESDK/RSExportSession.h" target-dir="videoAESDK" />
+<source-file src="src/ios/videoAESDK/RSExportSession.m" target-dir="videoAESDK" />
+<header-file src="src/ios/videoAESDK/RSGLFilter.h" target-dir="videoAESDK" />
+<source-file src="src/ios/videoAESDK/RSGLFilter.m" target-dir="videoAESDK" />
+<header-file src="src/ios/videoAESDK/RSGLProgram.h" target-dir="videoAESDK" />
+<source-file src="src/ios/videoAESDK/RSGLProgram.m" target-dir="videoAESDK" />
+<header-file src="src/ios/videoAESDK/RSMVString.h" target-dir="videoAESDK" />
+<source-file src="src/ios/videoAESDK/RSMVString.m" target-dir="videoAESDK" />
+<header-file src="src/ios/videoAESDK/RSVideoChannel.h" target-dir="videoAESDK" />
+<source-file src="src/ios/videoAESDK/RSVideoChannel.m" target-dir="videoAESDK" />
+<header-file src="src/ios/videoAESDK/RSVideoCompositionInstruction.h" target-dir="videoAESDK" />
+<source-file src="src/ios/videoAESDK/RSVideoCompositionInstruction.m" target-dir="videoAESDK" />
+<header-file src="src/ios/videoAESDK/RSVideoCompositior.h" target-dir="videoAESDK" />
+<source-file src="src/ios/videoAESDK/RSVideoCompositior.m" target-dir="videoAESDK" />
+<header-file src="src/ios/videoAESDK/Uitiltes.h" target-dir="videoAESDK" />
+<source-file src="src/ios/videoAESDK/Uitiltes.m" target-dir="videoAESDK" />
+<header-file src="src/ios/videoAESDK/Video_Const.h" target-dir="videoAESDK" />
+<header-file src="src/ios/videoAESDK/VideoProc.h" target-dir="videoAESDK" />
+<source-file src="src/ios/videoAESDK/VideoProc.m" target-dir="videoAESDK" />
+				
     </platform>
 
     <!-- browser -->

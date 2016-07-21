@@ -34,9 +34,10 @@
 	var opt = {
 		items: [
 			{type: 'audio', value: 'cdvfile://localhost/temporary/1.mp3'}, // 音频
-			{type: 'image', value: 'cdvfile://localhost/temporary/1.png'}, // 图片
-			{type: 'text', value: '配音: 张三丰 - 网友1', from: 15.0, to: 16.0, x: 120, y: 150}, // 文本
-			{type: 'text', value: '配音: 张无忌 - 网友2', from: 16.0, to: 17.0, x: 120, y: 150}, // 文本2
+			{type: 'audio', value: 'cdvfile://localhost/temporary/2.mp3'}, // 音频2
+			{type: 'image', value: 'cdvfile://localhost/temporary/1.png', x: 10, y: 10}, // 图片
+			{type: 'text', value: '配音: 张三丰 - 网友1', from: 1.0, to: 2.0, x: 20, y: 20}, // 文本
+			{type: 'text', value: '配音: 张无忌 - 网友2', from: 2.0, to: 3.0, x: 40, y: 40} // 文本2
 		]
 	};
 
@@ -49,3 +50,9 @@
 	function onFail(msg) {
 		alert('fail: ' + msg);
 	}
+
+注意：
+
+- 文件应使用全路径。
+ 在安卓上，路径可以为 file.externalDataDirectory + "1.mp3", 其实际路径可能是 "file:///storage/emulated/0/Android/data/io.cordova.hellocordova/files/1.mp3"
+ 在IOS上，路径可以为 file.dataDirectory + "1.mp3"，但需要将前面协议部分如 "file://" 去掉，即路径是 "/User/.../1.mp3"
