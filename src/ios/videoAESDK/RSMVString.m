@@ -21,6 +21,12 @@
         lable.textColor = [UIColor whiteColor];
         lable.textAlignment  = NSTextAlignmentCenter;
         lable.backgroundColor = [UIColor blackColor];
+//        阴影
+        lable.shadowColor = [UIColor grayColor];
+        lable.shadowOffset = CGSizeMake(3, 3);
+        lable.layer.shadowOpacity=1;//透明度
+        lable.layer.shadowRadius=3;//半径
+        
         self.backgroundColor = [UIColor blackColor];
         lable.font = [UIFont systemFontOfSize:size];
         [self addSubview:lable];
@@ -34,7 +40,7 @@
     CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5; //0.5 to 1.0,away from black
     return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
 }
--(CVPixelBufferRef)convertViewToImage{
+-(UIImage *)convertViewToImage{
                                                                                                                                                                                                                                                                                                                                                                       
     UIGraphicsBeginImageContext(self.bounds.size);
     
@@ -43,7 +49,8 @@
     UIImage*image = UIGraphicsGetImageFromCurrentImageContext();
     
     UIGraphicsEndImageContext();
-    return [self pixelBufferFromCGImage:image.CGImage];
+//    return [self pixelBufferFromCGImage:image.CGImage];
+    return image;
 }
 
 - (CVPixelBufferRef) pixelBufferFromCGImage: (CGImageRef) image

@@ -40,6 +40,7 @@
 {
     self.exportPorcessBlock = [processcb copy];
     self.exportSession = [AVAssetExportSession exportSessionWithAsset:self.avAsset presetName:self.presetName];
+    self.exportSession.audioMix = self.audioMix;
     self.exportSession.outputFileType = self.outputFileType;
     self.exportSession.outputURL = self.outPutUrl;
     self.exportSession.shouldOptimizeForNetworkUse = YES;

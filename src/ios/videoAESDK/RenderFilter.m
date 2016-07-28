@@ -97,19 +97,20 @@ GLfloat quadVertexData [] = {
     self.configItemsArray = [NSMutableArray arrayWithArray:configItems];
     for (int index = 0; index <self.configItemsArray.count; index++) {
         ConfigItem * item = self.configItemsArray[index];
-        CVPixelBufferRef pixelBuffer=NULL;
-        CVOpenGLESTextureRef texture = NULL;
+        if(item.type !=kMediaType_Text&&item.type != kMediaType_Picture)continue;
         kMediaType mediaType = kMediaType_unKnown;
         GLModel * model = [[GLModel alloc]init];
         if (item.type == kMediaType_Picture) {
             mediaType = kMediaType_Picture ;
 //           NSString * path =  [[NSBundle mainBundle]pathForResource:@"1" ofType:@"png"];
             UIImage * image = [UIImage imageWithContentsOfFile:item.value];
-            pixelBuffer = [Uitiltes cVPixelBufferFrome:image];
+//           NSString * path =  [[NSBundle mainBundle]pathForResource:@"0" ofType:@"png"];
+//            UIImage * image = [UIImage imageWithContentsOfFile:path];
             model.image = image;
         }else if(item.type ==kMediaType_Text){
             RSMVString *textPic = [[RSMVString alloc]initWithcString:item.value withFontSize:kFontSize withPosition:CGPointMake(item.pointX, item.pointY)];
-             pixelBuffer = [textPic convertViewToImage];
+            UIImage * image = [textPic convertViewToImage];
+            model.image = image;
             mediaType = kMediaType_Text;
         }
         //programe 相关
@@ -124,10 +125,10 @@ GLfloat quadVertexData [] = {
         model.glPositionSlot = position;
         model.sampleSlot = sample;
         model.glTextureSlot = textureSlot;
-        model.pixelBuffer = pixelBuffer;
-        model.texture = texture;
         model.brignessSlot = brignessSlot;
         model.index  = index;
+        CGImageRef newImageSource = model.image.CGImage;
+        model.textFromImageDataProvider = CGDataProviderCopyData(CGImageGetDataProvider(newImageSource)) ;
         glEnableVertexAttribArray(model.glPositionSlot);
         glEnableVertexAttribArray(model.glTextureSlot);
         [programeSlots addObject:model];
@@ -155,42 +156,50 @@ GLfloat quadVertexData [] = {
         glClear(GL_COLOR_BUFFER_BIT);
         [self renderWithTime:compositionTime];
     }
+    int j = 0 ;
     if (programeSlots.count!=0) {
+        @autoreleasepool {
         for (int index = 0 ; index < programeSlots.count; index++) {
             GLModel * model = programeSlots[index];
             ConfigItem * item = self.configItemsArray[model.index];
             if(item.to ==-1)item.to = CMTimeGetSeconds(self.videoCompositionDuration);
             if (CMTimeGetSeconds(compositionTime)<item.frome||CMTimeGetSeconds(compositionTime)>item.to) {
-                continue ; 
+                continue ;
             }
             glUseProgram(model.glPrograme);
-            if (model.pixelBuffer) {
+//            if (model.pixelBuffer) {
+            
                 CFDataRef dataFromImageDataProvider = NULL;
-                CVOpenGLESTextureRef  textTexture = NULL;
                 if (model.type == kMediaType_Picture) {
-                    glActiveTexture(GL_TEXTURE1+index);
-
-                    UIImage * img = model.image;
-                    CGImageRef newImageSource=img.CGImage;
-                    dataFromImageDataProvider = CGDataProviderCopyData(CGImageGetDataProvider(newImageSource));
+                    glActiveTexture(GL_TEXTURE1+j);
+                    dataFromImageDataProvider = model.textFromImageDataProvider;
                     GLubyte *imageData = NULL;
                     imageData = (GLubyte *)CFDataGetBytePtr(dataFromImageDataProvider);
                     glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,
-                                 (int)CGImageGetWidth(newImageSource),
-                                 (int)CGImageGetHeight(newImageSource),
+                                 (int)CGImageGetWidth(model.image.CGImage),
+                                 (int)CGImageGetHeight(model.image.CGImage),
                                  0,
                                  GL_RGBA, GL_UNSIGNED_BYTE, imageData);
                     glBindTexture(GL_TEXTURE_2D, 0);
-                }else
+                    glUniform1i(model.sampleSlot,1+j);
+                    j ++ ;
+                }else if(model.type == kMediaType_Text)
                 {
-                    CVOpenGLESTextureRef  textTexture = [self bgraTextureForPixelBuffer:model.pixelBuffer];
-                    glActiveTexture(GL_TEXTURE1+index);
-                    glBindTexture(CVOpenGLESTextureGetTarget(textTexture), CVOpenGLESTextureGetName(textTexture));
+                    glActiveTexture(GL_TEXTURE7);
+                    dataFromImageDataProvider = model.textFromImageDataProvider;
+                    GLubyte *imageData = NULL;
+                    imageData = (GLubyte *)CFDataGetBytePtr(dataFromImageDataProvider);
+                    glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,
+                                 (int)CGImageGetWidth(model.image.CGImage),
+                                 (int)CGImageGetHeight(model.image.CGImage),
+                                 0,
+                                 GL_RGBA, GL_UNSIGNED_BYTE, imageData);
+                    glBindTexture(GL_TEXTURE_2D, 0);
+                    glUniform1i(model.sampleSlot,7);
                 }
-
                 [self setDefaultTextureAttributes];
                  glViewport(0, 0, (int)CVPixelBufferGetWidth(destinationPixelBuffer), (int)CVPixelBufferGetHeight(destinationPixelBuffer));
-                glUniform1i(model.sampleSlot,1+index);
+                glUniform1f(model.brignessSlot, 1.0);
                 glVertexAttribPointer(model.glTextureSlot, 2, GL_FLOAT, 0, 0,[[self class] textureCoordinatesForRotation:kGPUImageNoRotation]);
                 glEnableVertexAttribArray(model.glTextureSlot);
                 if (model.type == kMediaType_Picture) {
@@ -201,22 +210,26 @@ GLfloat quadVertexData [] = {
                     glViewport(0, 0, (int)CVPixelBufferGetWidth(destinationPixelBuffer), (int)CVPixelBufferGetHeight(destinationPixelBuffer));
                     glBlendFunc(GL_SRC_ALPHA,GL_ONE);
                 }
-                glUniform1f(model.brignessSlot, 1.0);
+
                 glVertexAttribPointer(model.glPositionSlot, 3, GL_FLOAT, 0, 0,quadVertexData);
                 glEnableVertexAttribArray(model.glPositionSlot);
                 glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-                if(model.type == kMediaType_Text)
-                {
-                    if (textTexture!=NULL) {
-                        CFRelease(textTexture);
-                        textTexture = NULL;
-                    }
-                }else
-                {
-                    CFRelease(dataFromImageDataProvider);
-                }
-            }
+//                if(model.type == kMediaType_Text)
+//                {
+//                    if (textFromImageDataProvider!=NULL) {
+//                        CFRelease(textFromImageDataProvider);
+//                        textFromImageDataProvider = NULL;
+//                    }
+//                }else
+//                {
+//                    if (dataFromImageDataProvider!=NULL) {
+//                        CFRelease(dataFromImageDataProvider);
+//                        dataFromImageDataProvider = NULL;
+//                    }
+//                }
+//            }
         }
+    }
     }
 bail:
     if(foregroundTexture !=NULL){
@@ -263,14 +276,13 @@ bail:
         CFRelease(destTexture);
         destTexture = NULL;
     }
-    for(int index = 0 ;index <programeSlots.count; index ++)
-    {
-       GLModel * model =  programeSlots[index];
-        glDeleteProgram(model.glPrograme);
-        if (model.pixelBuffer!=NULL) {
-            CFRelease(model.pixelBuffer);
-            model.pixelBuffer = NULL;
+    for (int index = 0 ; index < programeSlots.count; index++) {
+        GLModel * model = programeSlots[index];
+        if (model.textFromImageDataProvider) {
+            CFRelease(model.textFromImageDataProvider);
+            model.textFromImageDataProvider = NULL;
         }
     }
+    
 }
 @end

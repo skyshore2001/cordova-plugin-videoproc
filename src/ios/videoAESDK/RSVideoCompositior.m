@@ -95,7 +95,7 @@ static UIImage * tailImage = nil;
                 if (resultPixels) {
                     [asyncVideoCompositionRequest finishWithComposedVideoFrame:resultPixels];
                     if(dstPixelBuffer!=NULL){
-                        CFRelease(dstPixelBuffer);
+                        CVPixelBufferRelease(dstPixelBuffer);
                         dstPixelBuffer =NULL;
                     }
                 } else {

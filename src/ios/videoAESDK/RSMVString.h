@@ -10,5 +10,5 @@
 
 @interface RSMVString :UIView
 - (instancetype)initWithcString:(NSString  *)string withFontSize:(CGFloat)size withPosition:(CGPoint)position;
--(CVPixelBufferRef)convertViewToImage;
+-(UIImage *)convertViewToImage;
 @end

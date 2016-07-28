@@ -1,9 +1,13 @@
 {
+    "replaceAudio":true,
+    "videoVolume" :1.0,
     "items": [
               {
               "type": "audio",
-              "value": "audioFile"
-              },
+              "value": "audioFile",
+              "volume":0.4
+              }
+              ,
               {
               "type": "image",
               "value": "好好吃饭奥!",
@@ -12,8 +16,9 @@
               "x": 0,
               "y": 0,
               "width":480,
-              "height":360
-              },
+              "height":320
+              }
+              ,
               {
               "type": "text",
               "value": "好好吃饭奥!",
