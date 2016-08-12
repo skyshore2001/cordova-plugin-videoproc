@@ -108,7 +108,7 @@ GLfloat quadVertexData [] = {
 //            UIImage * image = [UIImage imageWithContentsOfFile:path];
             model.image = image;
         }else if(item.type ==kMediaType_Text){
-            RSMVString *textPic = [[RSMVString alloc]initWithcString:item.value withFontSize:kFontSize withPosition:CGPointMake(item.pointX, item.pointY)];
+            RSMVString *textPic = [[RSMVString alloc]initWithcString:item.value withFontSize:item.fontSize withPosition:CGPointMake(item.pointX, item.pointY)];
             UIImage * image = [textPic convertViewToImage];
             model.image = image;
             mediaType = kMediaType_Text;

@@ -33,7 +33,15 @@
 {
     self.videoQuality = RSVideoHighestQuality;
     self.outputFileType = AVFileTypeMPEG4;
-    self.presetName =AVAssetExportPresetHighestQuality;
+    if (VideoQuality == RSVideoLowQuality) {
+        self.presetName =AVAssetExportPresetLowQuality;
+    }else if(VideoQuality ==RSVideoMediumQuality)
+    {
+        self.presetName = AVAssetExportPresetMediumQuality;
+    }else if(VideoQuality == RSVideoHighestQuality)
+    {
+        self.presetName = AVAssetExportPresetHighestQuality; 
+    }
 }
 
 - (void)doExportWithProcess:(ExporterProcessBlock)processcb  withSuccess:(ExporterSuccessBlock )successCb withFaild:(ExporterFaildBlock)faildCb

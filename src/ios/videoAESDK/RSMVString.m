@@ -19,7 +19,7 @@
         
         lable.text = string;
         lable.textColor = [UIColor whiteColor];
-        lable.textAlignment  = NSTextAlignmentCenter;
+        lable.textAlignment  = NSTextAlignmentLeft;
         lable.backgroundColor = [UIColor blackColor];
 //        阴影
         lable.shadowColor = [UIColor grayColor];

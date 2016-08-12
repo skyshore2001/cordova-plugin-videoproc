@@ -22,6 +22,7 @@
     self.height = 0;
     self.width = 0 ;
     self.volume = 1.0;
+    self.fontSize = kFontSize;  
     return self;
 }
 - (NSInteger)frome

@@ -22,8 +22,9 @@
 #endif
 
 #define kTailDuration  2.0f 
+//定义了字体的大小
+#define kFontSize  40
 
-#define kFontSize  50
 
 typedef enum{
     kMediaType_unKnown=-1,
@@ -55,15 +56,18 @@ typedef enum{
 #define STRINGIZE2(x) STRINGIZE(x)
 #define SHADER_STRING(text) @ STRINGIZE2(text)
 
+
 /**
  *视频质量
  */
 typedef enum {
-    RSVideoLowQuality ,  //低质量
+    RSVideoLowQuality =0,  //低质量
     RSVideoMediumQuality ,//中质量
     RSVideoHighestQuality //高质量
 }RSVideoQuality;
 
+//视频质量
+#define VideoQuality RSVideoMediumQuality
 /**
  *  WeakSelf 
  */

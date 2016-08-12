@@ -92,3 +92,12 @@ function testit()
 
 
 ```
+//修改视频导出的质量  
+RSVideoLowQuality  //低质量 
+RSVideoMediumQuality //中质量 
+RSVideoHighestQuality //高质量 
+//如果需要修改为低质量 找到宏定义的地方 如下 修改(在video_Const.h文件中修改)  
+#define VideoQuality RSVideoLowQuality
+//中质量视频
+#define VideoQuality RSVideoMediumQuality
+

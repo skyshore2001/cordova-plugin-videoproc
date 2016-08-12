@@ -107,6 +107,7 @@ static char videoTrackId ;
         configItem.width = [[item objectForKey:@"width"]integerValue];
         configItem.height = [[item objectForKey:@"height"]integerValue];
         configItem.volume =[item objectForKey:@"volume"]?[[item objectForKey:@"volume"]floatValue]:1.0;
+        configItem.fontSize = [item objectForKey:@"fontSize"]?[[item objectForKey:@"fontSize"]floatValue]:kFontSize;
         [configInfo addObject:configItem];
     }
     return configInfo;
